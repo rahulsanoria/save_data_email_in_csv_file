@@ -7,8 +7,8 @@ import csv
 import io, json
 import pandas as pd
 
-username = 'your_email_id'
-password = 'password'
+username = 'rahul.kumar25011999@gmail.com'
+password = '07sainty'
 
 mail = imaplib.IMAP4_SSL("imap.gmail.com") 
 mail.login(username, password)
@@ -54,35 +54,15 @@ elif "html" in content_type:
 else:
 	body = content_type
 
-p = {"FROM" : from_ , "TO" : to_ , "DATE" : date_ , "SUBJECT" : subject_ , "BODY" : body }
-d = json.dumps(p)
+x = {"FROM" : from_ , "TO" : to_ , "DATE" : date_ , "SUBJECT" : subject_ , "BODY" : body }
+b = json.dumps(x)
+a = json.loads(b)
+f = csv.writer(open("append.csv", "a"))
+# f.writerow(["FROM", "TO", "DATE", "SUBJECT", "BODY"])
+f.writerow([a["FROM"] , a["TO"] , a["DATE"] , a["SUBJECT"] , a["BODY"]])
 
-f = open('append.csv' , 'a')
-csv_file = csv.writer(f)
-for item in d:
-    csv_file.writerow(item)
-    print item
-f.close()
-
-# csvo = open('append.csv', 'a')
-# csvwriter = csv.writer(csvo)
-# count = 0
-
-# for data in p:
-#     if count==0:
-#         header = data.keys()
-#         csvwriter.writerow(header)
-#         count += 1
-#     csvwriter.writerow(data.values())
-# csvo.close()        
-
-
-    
-
-# with io.open('append.json', 'w', encoding='utf-8') as f:
-#   f.write(json.dumps(data, ensure_ascii=False))
-
-# df = pd.read_json("append.json")
-# print df
-# df.to_csv('append.csv')
-
+save_path = os.path.join(os.getcwd(), "Email_attachment", date_, subject_)
+if not os.path.exists(save_path):
+    os.makedirs(save_path)
+with open(os.path.join(save_path, filename), 'wb') as fp:
+        fp.write(part.get_payload(decode=True))
