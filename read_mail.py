@@ -7,8 +7,8 @@ import csv
 import io, json
 import pandas as pd
 
-username = 'rahul.kumar25011999@gmail.com'
-password = '07sainty'
+username = 'your_email_id'
+password = 'password'
 
 mail = imaplib.IMAP4_SSL("imap.gmail.com") 
 mail.login(username, password)
